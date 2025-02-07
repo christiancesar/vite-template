@@ -18,7 +18,7 @@ export function Address() {
           <InputText
             label={field.name}
             placeholder="Informe sua rua"
-            error={errors.address?.street?.message}
+            error={errors.address?.street}
             {...field}
           />
         )}
@@ -30,7 +30,7 @@ export function Address() {
           <InputText
             label={field.name}
             placeholder="Informe o número"
-            error={errors.address?.number?.message}
+            error={errors.address?.number}
             {...field}
           />
         )}
@@ -42,7 +42,7 @@ export function Address() {
           <InputText
             label={field.name}
             placeholder="Informe sua cidade"
-            error={errors.address?.city?.message}
+            error={errors.address?.city}
             {...field}
           />
         )}
@@ -54,7 +54,7 @@ export function Address() {
           <InputText
             label={field.name}
             placeholder="Informe seu estado"
-            error={errors.address?.state?.message}
+            error={errors.address?.state}
             {...field}
           />
         )}
@@ -66,7 +66,7 @@ export function Address() {
           <InputText
             label={field.name}
             placeholder="Informe seu CEP"
-            error={errors.address?.zipCode?.message}
+            error={errors.address?.zipCode}
             {...field}
           />
         )}

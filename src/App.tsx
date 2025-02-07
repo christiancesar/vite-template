@@ -5,25 +5,24 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { Address } from './components/address';
 
+yup.setLocale({
+  mixed: {
+    required: 'Campo obrigatório',
+  },
+  string: {
+    min: 'Deve ter no mínimo ${min} caracteres',
+    email: 'Deve ser um email válido',
+  },
+});
+
 const customerRegisterSchema = yup
   .object({
     customer: yup
       .object({
-        firstName: yup
-          .string()
-          .min(3, {
-            message: 'Nome deve ter no mínimo 3 caracteres',
-          })
-          .required(),
-        lastName: yup
-          .string()
-          .min(3, { message: 'Sobrenome deve ter no mínimo 3 caracteres' })
-          .required(),
-        phone: yup
-          .string()
-          .min(11, { message: 'Telefone inválido' })
-          .required(),
-        email: yup.string().email({ message: 'Email inválido' }).required(),
+        firstName: yup.string().min(3).required(),
+        lastName: yup.string().min(3).required(),
+        phone: yup.string().min(11).required(),
+        email: yup.string().email().required(),
       })
       .required(),
     address: yup
@@ -40,21 +39,21 @@ const customerRegisterSchema = yup
 
 export type CustomerRegister = yup.InferType<typeof customerRegisterSchema>;
 
-const user: CustomerRegister = {
-  customer: {
-    firstName: 'Christian Cesar',
-    lastName: 'Doe',
-    phone: '11999999999',
-    email: 'john.doe@example.com',
-  },
-  address: {
-    street: 'Rua das Flores',
-    number: '123',
-    city: 'Rondonopolis',
-    state: 'MT',
-    zipCode: '78735000',
-  },
-};
+// const user: CustomerRegister = {
+//   customer: {
+//     firstName: 'Christian Cesar',
+//     lastName: 'Doe',
+//     phone: '11999999999',
+//     email: 'john.doe@example.com',
+//   },
+//   address: {
+//     street: 'Rua das Flores',
+//     number: '123',
+//     city: 'Rondonopolis',
+//     state: 'MT',
+//     zipCode: '78735000',
+//   },
+// };
 
 export default function App() {
   const [listNames, setListNames] = useState<string[]>([]);
@@ -63,17 +62,17 @@ export default function App() {
     resolver: yupResolver(customerRegisterSchema),
     defaultValues: {
       customer: {
-        firstName: user.customer.firstName,
-        lastName: user.customer.lastName,
-        phone: user.customer.phone,
-        email: user.customer.email,
+        firstName: '',
+        lastName: '',
+        phone: '',
+        email: '',
       },
       address: {
-        street: user.address.street,
-        number: user.address.number,
-        city: user.address.city,
-        state: user.address.state,
-        zipCode: user.address.zipCode,
+        street: '',
+        number: '',
+        city: '',
+        state: '',
+        zipCode: '',
       },
     },
   });
@@ -104,7 +103,7 @@ export default function App() {
                   <InputText
                     label={field.name}
                     placeholder="Informe seu primeiro nome"
-                    error={errors.customer?.firstName?.message}
+                    error={errors.customer?.firstName}
                     {...field}
                   />
                 )}
@@ -116,7 +115,7 @@ export default function App() {
                   <InputText
                     label={field.name}
                     placeholder="Informe seu sobrenome"
-                    error={errors.customer?.lastName?.message}
+                    error={errors.customer?.lastName}
                     {...field}
                   />
                 )}
@@ -129,7 +128,7 @@ export default function App() {
                   <InputText
                     label={field.name}
                     placeholder="Informe seu telefone"
-                    error={errors.customer?.phone?.message}
+                    error={errors.customer?.phone}
                     {...field}
                   />
                 )}
@@ -141,7 +140,7 @@ export default function App() {
                   <InputText
                     label={field.name}
                     placeholder="Informe seu email"
-                    error={errors.customer?.email?.message}
+                    error={errors.customer?.email}
                     {...field}
                   />
                 )}
