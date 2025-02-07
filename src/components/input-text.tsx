@@ -1,3 +1,4 @@
+import { formatPropertyName } from '@/utils/formatPropertyName';
 import { FieldError } from 'react-hook-form';
 
 type InputTextProps = {
@@ -14,7 +15,7 @@ export function InputText({
 }: InputTextProps) {
   return (
     <div className="flex flex-col gap-2">
-      <label>{label}</label>
+      <label>{formatPropertyName(label)}</label>
       <input
         defaultValue={props.value}
         type="text"
