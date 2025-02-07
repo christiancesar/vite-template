@@ -1,18 +1,37 @@
 import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { InputText } from './components/input-text';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+
+const customerRegisterSchema = yup
+  .object({
+    name: yup
+      .string()
+      .min(10, {
+        message: 'Nome deve ter no mínimo 10 caracteres',
+      })
+      .required(),
+  })
+  .required();
+
+type CustomerRegister = yup.InferType<typeof customerRegisterSchema>;
 
 export default function App() {
-  // const [showName, setShowName] = useState('');
   const [listNames, setListNames] = useState<string[]>([]);
 
-  const { control, handleSubmit } = useForm({
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(customerRegisterSchema),
     defaultValues: {
       name: '',
     },
   });
 
-  function handleSubmitCustomer(data: { name: string }) {
+  function handleSubmitCustomer(data: CustomerRegister) {
     const name = data.name;
     setListNames([...listNames, name]);
   }
@@ -33,7 +52,9 @@ export default function App() {
                 />
               )}
             />
-
+            <span className="text-red-500">
+              {JSON.stringify(errors.name?.message)}
+            </span>
             <button
               type="submit"
               className="rounded-md bg-emerald-600 p-2 text-white"
