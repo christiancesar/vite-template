@@ -20,7 +20,7 @@ export function InputText({
         defaultValue={props.value}
         type="text"
         placeholder={placeholder}
-        className="rounded-md border-2 border-emerald-600 p-2"
+        className="rounded-md border-2 border-gray-300 p-2 focus:border-emerald-500 focus:outline-none"
         {...props}
       />
       {error && <span className="text-red-500">{error.message}</span>}
